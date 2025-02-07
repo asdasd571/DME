@@ -1,0 +1,897 @@
+openapi: 3.0.3
+info:
+  description: |
+    API for Data registration service.
+    © 2024, O-RAN ALLIANCE.
+    All rights reserved.
+  title: Data registration service
+  version: 2.0.0-alpha.1
+externalDocs:
+  description: O-RAN.WG2.R1AP-v06.00
+  url: https://www.o-ran.org/specifications
+servers:
+- url: "{apiRoot}/data-registration/v2/ {apiConsumerId}"
+  variables:
+    apiRoot:
+      default: https://example.com
+      description: apiRoot as defined in clause 5.3 in O-RAN.WG2.R1AP
+    apiConsumerId:
+      default: ""
+      description: Identifier of the API consumer that registers its data production
+        capabilities
+paths:
+  /production-capabilities:
+    post:
+      description: To register DME type production capabilities
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DmeTypeRelatedCapabilities'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DmeTypeRelatedCapabilities'
+          description: Success case 201 created
+          headers:
+            Location:
+              description: Contains the URI of the newly created resource
+              explode: false
+              required: true
+              schema:
+                type: string
+              style: simple
+        "400":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Bad Request
+        "401":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Unauthorized
+        "403":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Forbidden
+        "404":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Not Found
+        "405":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Method Not Allowed
+        "409":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Conflict
+        "413":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Payload Too Large
+        "415":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Unsupported Media Type
+        "429":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Too Many Requests
+        "500":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Internal Server Error
+        "502":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Bad Gateway
+        "503":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Service Unavailable
+      tags:
+      - Registered DME type production capabilities
+  /production-capabilities/{registrationId}:
+    delete:
+      description: To deregister DME type production capabilities
+      parameters:
+      - explode: false
+        in: path
+        name: registrationId
+        required: true
+        schema:
+          $ref: '#/components/schemas/registrationId'
+        style: simple
+      responses:
+        "204":
+          description: The registration was deleted
+        "400":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Bad Request
+        "401":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Unauthorized
+        "403":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Forbidden
+        "404":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Not Found
+        "429":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Too Many Requests
+        "500":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Internal Server Error
+        "502":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Bad Gateway
+        "503":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Service Unavailable
+      tags:
+      - Individual registered DME type production capability
+    get:
+      description: To query DME type production capabilities that it has previously
+        registered
+      parameters:
+      - explode: false
+        in: path
+        name: registrationId
+        required: true
+        schema:
+          $ref: '#/components/schemas/registrationId'
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DmeTypeRelatedCapabilities'
+          description: Success case 200 with queried information
+        "400":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Bad Request
+        "401":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Unauthorized
+        "403":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Forbidden
+        "404":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Not Found
+        "406":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Not Acceptable
+        "429":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Too Many Requests
+        "500":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Internal Server Error
+        "502":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Bad Gateway
+        "503":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Service Unavailable
+      tags:
+      - Individual registered DME type production capability
+    put:
+      description: To update DME type production capabilities that it has previously
+        registered
+      parameters:
+      - explode: false
+        in: path
+        name: registrationId
+        required: true
+        schema:
+          $ref: '#/components/schemas/registrationId'
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DmeTypeRelatedCapabilities'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DmeTypeRelatedCapabilities'
+          description: Success case 200 with updated information
+        "400":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Bad Request
+        "401":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Unauthorized
+        "403":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Forbidden
+        "404":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Not Found
+        "406":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Not Acceptable
+        "411":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Length Required
+        "413":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Payload Too Large
+        "415":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Unsupported Media Type
+        "429":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Too Many Requests
+        "500":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Internal Server Error
+        "502":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Bad Gateway
+        "503":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Service Unavailable
+      tags:
+      - Individual registered DME type production capability
+components:
+  responses:
+    "400":
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+      description: Bad Request
+    "401":
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+      description: Unauthorized
+    "403":
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+      description: Forbidden
+    "404":
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+      description: Not Found
+    "405":
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+      description: Method Not Allowed
+    "409":
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+      description: Conflict
+    "413":
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+      description: Payload Too Large
+    "415":
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+      description: Unsupported Media Type
+    "429":
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+      description: Too Many Requests
+    "500":
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+      description: Internal Server Error
+    "502":
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+      description: Bad Gateway
+    "503":
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+      description: Service Unavailable
+    "406":
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+      description: Not Acceptable
+    "411":
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+      description: Length Required
+  schemas:
+    registrationId:
+      description: 'A successful registration identified by registrationId '
+      type: string
+    DmeTypeRelatedCapabilities:
+      description: Information related to the registration as producer of a DME type
+      example:
+        dmeTypeDefinition:
+          metadata:
+            rat:
+            - rat
+            - rat
+            dataCategory:
+            - dataCategory
+            - dataCategory
+          dmeTypeId:
+            namespace: namespace
+            name: name
+            version: version
+          dataDeliveryMechanisms:
+          - dataDeliveryMethod: ""
+            kafkaDeliveryConfiguration:
+              retentionMs: 1
+              retentionBytes: 6
+              cleanUpPolicy: cleanUpPolicy
+              numPartitions: 0
+              compressionType: compressionType
+          - dataDeliveryMethod: ""
+            kafkaDeliveryConfiguration:
+              retentionMs: 1
+              retentionBytes: 6
+              cleanUpPolicy: cleanUpPolicy
+              numPartitions: 0
+              compressionType: compressionType
+          dataProductionSchema: "{}"
+          dataDeliverySchemas:
+          - schema: schema
+            deliverySchemaId: deliverySchemaId
+            type: JSON_SCHEMA
+          - schema: schema
+            deliverySchemaId: deliverySchemaId
+            type: JSON_SCHEMA
+        dataDeliveryModes:
+        - ONE_TIME
+        - ONE_TIME
+        dataAccessEndpoint:
+          ipv6Addr: ipv6Addr
+          grantTypes:
+          - CLIENT_CREDENTIALS
+          - CLIENT_CREDENTIALS
+          securityMethods:
+          - PSK
+          - PSK
+          fqdn: fqdn
+          port: 39072
+          apiPrefix: apiPrefix
+          ipv4Addr: ipv4Addr
+        constraints: "{}"
+      properties:
+        dmeTypeDefinition:
+          $ref: '#/components/schemas/DmeTypeDefinition'
+        constraints:
+          description: Formulates producer constraints or constraints applicable to
+            the consumption related to the DME type based on the dataProductionSchema
+          title: constraints
+          type: object
+        dataAccessEndpoint:
+          $ref: '#/components/schemas/InterfaceDescription'
+        dataDeliveryModes:
+          items:
+            $ref: '#/components/schemas/DataDeliveryMode'
+          title: dataDeliveryModes
+          type: array
+      required:
+      - dataAccessEndpoint
+      - dataDeliveryModes
+      - dmeTypeDefinition
+      title: DmeTypeRelatedCapabilities
+      type: object
+    DmeTypeDefinition:
+      description: Information of the DME type
+      example:
+        metadata:
+          rat:
+          - rat
+          - rat
+          dataCategory:
+          - dataCategory
+          - dataCategory
+        dmeTypeId:
+          namespace: namespace
+          name: name
+          version: version
+        dataDeliveryMechanisms:
+        - dataDeliveryMethod: ""
+          kafkaDeliveryConfiguration:
+            retentionMs: 1
+            retentionBytes: 6
+            cleanUpPolicy: cleanUpPolicy
+            numPartitions: 0
+            compressionType: compressionType
+        - dataDeliveryMethod: ""
+          kafkaDeliveryConfiguration:
+            retentionMs: 1
+            retentionBytes: 6
+            cleanUpPolicy: cleanUpPolicy
+            numPartitions: 0
+            compressionType: compressionType
+        dataProductionSchema: "{}"
+        dataDeliverySchemas:
+        - schema: schema
+          deliverySchemaId: deliverySchemaId
+          type: JSON_SCHEMA
+        - schema: schema
+          deliverySchemaId: deliverySchemaId
+          type: JSON_SCHEMA
+      properties:
+        dmeTypeId:
+          $ref: '#/components/schemas/DmeTypeIdStruct'
+        metadata:
+          $ref: '#/components/schemas/Metadata'
+        dataProductionSchema:
+          description: "Schema that defines the information necessary to formulate\
+            \ a data request or data subscription.   If this attribute is not present,\
+            \ the schema is assumed to be known from the DME type definition that\
+            \ is referenced by dmeTypeId"
+          title: dataProductionSchema
+          type: object
+        dataDeliverySchemas:
+          description: List of delivery schemas supported by the producer for the
+            DME type being registered.
+          items:
+            $ref: '#/components/schemas/DeliverySchema'
+          title: dataDeliverySchemas
+          type: array
+        dataDeliveryMechanisms:
+          description: 'Defining the delivery mechanism supported by Data Producer '
+          items:
+            $ref: '#/components/schemas/DataDeliveryMechanism'
+          title: dataDeliveryMechanisms
+          type: array
+      required:
+      - “dataDeliveryMechanisms“
+      - “dataDeliverySchemas“
+      - “dmeTypeId“
+      - “metadata“
+      title: DmeTypeDefinition
+      type: object
+    DmeTypeIdStruct:
+      description: Defining the attributes of DME type identifier
+      example:
+        namespace: namespace
+        name: name
+        version: version
+      properties:
+        namespace:
+          description: Indicating the entity responsible for the DME type definition.
+          title: namespace
+          type: string
+        name:
+          description: Name of the DME type. The string can be any character except
+            “:“ (colon)
+          pattern: "^[^:]{1,}$"
+          title: name
+          type: string
+        version:
+          description: "Version of the DME type. The versioning and allowed characters\
+            \ are according to SemVer [11]"
+          title: version
+          type: string
+      required:
+      - “namespace“
+      - “name“
+      - “version“
+      title: DmeTypeIdStruct
+      type: object
+    DeliverySchema:
+      description: Delivery schema for a DME type
+      example:
+        schema: schema
+        deliverySchemaId: deliverySchemaId
+        type: JSON_SCHEMA
+      properties:
+        type:
+          $ref: '#/components/schemas/SchemaTypes'
+        deliverySchemaId:
+          description: A Data Producer may support one or more delivery schemas and
+            for each supported schema type a delivery schema identifier is assigned.
+            A Data Consumer uses this attribute while creating a data job and request
+            to deliver the data using specific schema type which is identified by
+            this attribute.
+          title: deliverySchemaId
+          type: string
+        schema:
+          description: "The schema serialized to string. If this attribute is not\
+            \ present, the schema is assumed to be known from the DME type definition\
+            \ that is referenced by dmeTypeId"
+          title: schema
+          type: string
+      required:
+      - “deliverySchemaId“
+      - “type“
+      title: DeliverySchema
+      type: object
+    DataDeliveryMechanism:
+      description: Defining the attributes of delivery mechanism supported
+      example:
+        dataDeliveryMethod: ""
+        kafkaDeliveryConfiguration:
+          retentionMs: 1
+          retentionBytes: 6
+          cleanUpPolicy: cleanUpPolicy
+          numPartitions: 0
+          compressionType: compressionType
+      nullable: true
+      oneOf: []
+      properties:
+        dataDeliveryMethod:
+          description: Delivery Method supported
+          title: dataDeliveryMethod
+        kafkaDeliveryConfiguration:
+          $ref: '#/components/schemas/KafkaDeliveryConfiguration'
+      required:
+      - dataDeliveryMethod
+      title: DataDeliveryMechanism
+      type: object
+    Metadata:
+      description: Metadata that can be used in discovering the DME type
+      example:
+        rat:
+        - rat
+        - rat
+        dataCategory:
+        - dataCategory
+        - dataCategory
+      properties:
+        dataCategory:
+          description: "Defines the category of the DME type e.g., PM counters"
+          items:
+            type: string
+          minItems: 1
+          title: dataCategory
+          type: array
+        rat:
+          description: "Defines the radio access technology e.g., 5G"
+          items:
+            type: string
+          minItems: 1
+          title: rat
+          type: array
+      required:
+      - “dataCategory“
+      title: Metadata
+    SchemaTypes:
+      description: Type of the schema supported by Data Producers
+      enum:
+      - JSON_SCHEMA
+      - XML_SCHEMA
+      title: SchemaTypes
+      type: string
+    KafkaDeliveryConfiguration:
+      description: These configuration will be applied if KAFKA_DATA_STREAM is selected
+        as delivery method
+      example:
+        retentionMs: 1
+        retentionBytes: 6
+        cleanUpPolicy: cleanUpPolicy
+        numPartitions: 0
+        compressionType: compressionType
+      properties:
+        numPartitions:
+          description: Number of partitions
+          title: numPartitions
+          type: integer
+        cleanUpPolicy:
+          description: "cleanUpPolicy is based on cleanup.policy defined in the Kafka\
+            \ Documentation [15]. "
+          title: cleanUpPolicy
+          type: string
+        compressionType:
+          description: " compressionType is based on compression.type defined in the\
+            \ Kafka Documentation [15] ."
+          title: compressionType
+          type: string
+        retentionBytes:
+          description: " retentionBytes is based on retention.bytes defined in the\
+            \ Kafka Documentation [15] . This attribute is applicable ONLY when cleanUpPolicy\
+            \ is set to DELETE"
+          title: retentionBytes
+          type: integer
+        retentionMs:
+          description: " retentionMs is based on retention.ms defined in the Kafka\
+            \ Documentation [15] . This attribute is applicable ONLY when cleanUpPolicy\
+            \ is set to DELETE"
+          title: retentionMs
+          type: integer
+      required:
+      - “cleanUpPolicy“
+      - “compressionType“
+      title: KafkaDeliveryConfiguration
+      type: object
+    ProblemDetails:
+      description: A problem detail to carry details in an HTTP response according
+        to RFC 7807
+      properties:
+        type:
+          description: a URI reference according to IETF RFC 3986 that identifies
+            the problem type
+          title: type
+          type: string
+        title:
+          description: human-readable summary of the problem type
+          title: title
+          type: string
+        status:
+          description: the HTTP status code
+          title: status
+          type: number
+        detail:
+          description: 'human-readable explanation '
+          title: detail
+          type: string
+        instance:
+          description: URI reference that identifies the specific occurrence of the
+            problem
+          title: instance
+          type: string
+      title: ProblemDetails
+      type: object
+    InterfaceDescription:
+      description: Represents the description of an API's interface.
+      example:
+        ipv6Addr: ipv6Addr
+        grantTypes:
+        - CLIENT_CREDENTIALS
+        - CLIENT_CREDENTIALS
+        securityMethods:
+        - PSK
+        - PSK
+        fqdn: fqdn
+        port: 39072
+        apiPrefix: apiPrefix
+        ipv4Addr: ipv4Addr
+      nullable: true
+      oneOf: []
+      properties:
+        ipv4Addr:
+          description: |
+            string identifying a Ipv4 address formatted in the "dotted decimal" notation as defined in IETF RFC 1166.
+          title: Ipv4Addr
+          type: string
+        ipv6Addr:
+          description: |
+            string identifying a Ipv6 address formatted according to clause 4 in IETF RFC 5952. The mixed Ipv4 Ipv6 notation according to clause 5 of IETF RFC 5952 shall not be used.
+          title: Ipv6Addr
+          type: string
+        fqdn:
+          description: Fully Qualified Domain Name
+          maxLength: 253
+          minLength: 4
+          pattern: "^([0-9A-Za-z]([-0-9A-Za-z]{0,61}[0-9A-Za-z])?\\.)+[A-Za-z]{2,63}\\\
+            .?$"
+          title: Fqdn
+          type: string
+        port:
+          description: Unsigned integer with valid values between 0 and 65535.
+          maximum: 65535
+          minimum: 0
+          title: Port
+          type: integer
+        apiPrefix:
+          description: |
+            A string representing a sequence of path segments that starts with the slash character.
+          title: apiPrefix
+          type: string
+        securityMethods:
+          description: |
+            Security methods supported by the interface, it take precedence over the security methods provided in AefProfile, for this specific interface.
+          items:
+            $ref: '#/components/schemas/SecurityMethod'
+          minItems: 1
+          title: securityMethods
+          type: array
+        grantTypes:
+          items:
+            $ref: '#/components/schemas/OAuthGrantType'
+          minItems: 1
+          title: grantTypes
+          type: array
+      title: InterfaceDescription
+      type: object
+    SecurityMethod:
+      anyOf:
+      - enum:
+        - PSK
+        - PKI
+        - OAUTH
+        type: string
+      - description: |
+          This string provides forward-compatibility with future extensions to the enumeration but is not used to encode content defined in the present version of this API.
+        type: string
+      description: "Indicates the security method.  \nPossible values are:\n- PSK:\
+        \ Security method 1 (Using TLS-PSK) as described in 3GPP TS 33.122.\n- PKI:\
+        \ Security method 2 (Using PKI) as described in 3GPP TS 33.122.\n- OAUTH:\
+        \ Security method 3 (TLS with OAuth token) as described in 3GPP TS 33.122.\n"
+      title: SecurityMethod
+    DataDeliveryMode:
+      description: This indicates whether the data instance is created in a one-time
+        data delivery (data request) or continuously (data subscription)
+      enum:
+      - ONE_TIME
+      - CONTINUOUS
+      title: DataDeliveryMode
+      type: string
+    Ipv4Addr:
+      description: |
+        string identifying a Ipv4 address formatted in the "dotted decimal" notation as defined in IETF RFC 1166.
+      title: Ipv4Addr
+      type: string
+    Ipv6Addr:
+      description: |
+        string identifying a Ipv6 address formatted according to clause 4 in IETF RFC 5952. The mixed Ipv4 Ipv6 notation according to clause 5 of IETF RFC 5952 shall not be used.
+      title: Ipv6Addr
+      type: string
+    Fqdn:
+      description: Fully Qualified Domain Name
+      maxLength: 253
+      minLength: 4
+      pattern: "^([0-9A-Za-z]([-0-9A-Za-z]{0,61}[0-9A-Za-z])?\\.)+[A-Za-z]{2,63}\\\
+        .?$"
+      title: Fqdn
+      type: string
+    Port:
+      description: Unsigned integer with valid values between 0 and 65535.
+      maximum: 65535
+      minimum: 0
+      title: Port
+      type: integer
+    OAuthGrantType:
+      anyOf:
+      - enum:
+        - CLIENT_CREDENTIALS
+        - AUTHORIZATION_CODE
+        - AUTHORIZATION_CODE_WITH_PKCE
+        type: string
+      - description: |
+          This string provides forward-compatibility with future extensions to the enumeration and is not used to encode content defined in the present version of this API.
+        type: string
+      description: "Indicates the supported authorization flow (e.g. client credentials\
+        \ flow, authorization code         flow, etc.) to the API invoker.  \nPossible\
+        \ values are:\n- CLIENT_CREDENTIALS: Indicate that the grant type is is client\
+        \ credentials flow.\n- AUTHORIZATION_CODE: Indicate that the grant type is\
+        \ authorization code.\n- AUTHORIZATION_CODE_WITH_PKCE: Indicate that the grant\
+        \ type is authorization code with PKCE.\n"
+      title: OAuthGrantType
